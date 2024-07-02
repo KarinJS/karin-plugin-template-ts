@@ -1,0 +1,10 @@
+{
+  "name": "karin-plugin-template-ts",
+  "version": "1.0.0",
+  "author": "Lain",
+  "type": "module",
+  "scripts": {
+    "build": "tsc --project tsconfig.json && tsc-alias -p tsconfig.json"
+  },
+  "dependencies": {}
+}
