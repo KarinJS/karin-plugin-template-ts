@@ -1,74 +1,88 @@
-import { Renderer, common, segment, Plugin, logger } from 'node-karin'
+import { dirPath } from '@/utils'
+import { karin, render, common, segment, logger } from 'node-karin'
 
-export class render extends Plugin {
-  constructor () {
-    super({
-      /** 插件名称 */
-      name: 'template-render',
-      /** 插件描述 */
-      dsc: '快速渲染',
-      rule: [
-        {
-          /** 命令正则匹配 */
-          reg: '^#?测试渲染$',
-          /** 执行方法 */
-          fnc: 'render',
-          /** 权限 master,owner,admin,all  */
-          permission: 'master',
-        },
-        {
-          /** 命令正则匹配 */
-          reg: '^#?渲染',
-          /** 执行方法 */
-          fnc: 'renderUrl',
-          /** 权限 master,owner,admin,all  */
-          permission: 'master',
-        },
-      ],
-    })
+/**
+ * 渲染demo
+ * 触发指令: #测试渲染
+ */
+export const image = karin.command(/^#?测试渲染$/, async (e) => {
+  try {
+    const filePath = common.absPath(dirPath + '/resources')
+    const html = filePath + '/template/test.html'
+    const image = filePath + '/image/启程宣发.png'
+
+    const img = await render.render({
+      name: 'render',
+      file: html,
+      data: {
+        file: image,
+        pluResPath: process.cwd(),
+      },
+      pageGotoParams: {
+        waitUntil: 'networkidle2',
+      },
+    }) as string
+
+    await e.reply(segment.image(img))
+    return true
+  } catch (error) {
+    logger.error(error)
+    await e.reply(JSON.stringify(error))
+
+    return true
   }
+}, {
+  /** 插件优先级 */
+  priority: 9999,
 
-  async render () {
-    try {
-      const filePath = common.absPath('./plugins/karin-Plugin-template/resources')
-      const html = filePath + '/template/test.html'
-      const image = filePath + '/image/启程宣发.png'
+  /** 插件触发是否打印触发日志 */
+  log: true,
 
-      const img = await Renderer.render({
-        name: 'render',
-        file: html,
-        data: {
-          file: image,
-          pluResPath: process.cwd(),
-        },
-      }) as string
-      return this.reply(segment.image(img))
-    } catch (e) {
-      logger.error(e)
-      return this.reply(JSON.stringify(e))
-    }
+  /** 插件名称 */
+  name: '测试渲染',
+
+  /** 谁可以触发这个插件 'all' | 'master' | 'admin' | 'group.owner' | 'group.admin' */
+  permission: 'all',
+
+})
+
+/**
+ * 渲染demo
+ * 触发指令: #渲染
+ */
+export const renderUrl = karin.command(/^#?渲染/, async (e) => {
+  const file = e.msg.replace(/^#?渲染/, '').trim()
+  try {
+    const img = await render.render({
+      name: 'render',
+      file: file || 'https://whitechi73.github.io/OpenShamrock/',
+      type: 'png',
+      pageGotoParams: {
+        waitUntil: 'networkidle2',
+      },
+      setViewport: {
+        width: 1920,
+        height: 1080,
+        deviceScaleFactor: 1,
+      },
+    }) as string
+    await e.reply(segment.image(img))
+    return true
+  } catch (error: any) {
+    logger.error(error)
+    await e.reply(error.message)
+    return true
   }
+}, {
+  /** 插件优先级 */
+  priority: 9999,
 
-  async renderUrl () {
-    const file = this.e.msg.replace(/^#?渲染/, '').trim()
-    try {
-      const img = await Renderer.render({
-        name: 'render',
-        file: file || 'https://whitechi73.github.io/OpenShamrock/',
-        type: 'png',
-        pageGotoParams: {
-          waitUntil: 'load',
-        },
-        setViewport: {
-          width: 1920,
-          height: 1080,
-          deviceScaleFactor: 1,
-        },
-      }) as string
-      this.reply(segment.image(img))
-    } catch (e:any) {
-      logger.error(e)
-      return this.reply(e.message)
-    }
-  }
-}
+  /** 插件触发是否打印触发日志 */
+  log: true,
+
+  /** 插件名称 */
+  name: '渲染demo',
+
+  /** 谁可以触发这个插件 'all' | 'master' | 'admin' | 'group.owner' | 'group.admin' */
+  permission: 'master',
+})

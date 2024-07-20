@@ -4,15 +4,18 @@
     "target": "ESNext",
     "esModuleInterop": true,
     "moduleResolution": "node",
-    "outDir": "./dist",
+    "outDir": "./lib",
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "paths": {
-      "@template/*": [
+      "@/*": [
         "src/*"
       ],
     },
+    "types": [
+      "@types/node"
+    ],
     "rootDir": "./src",
     "declaration": true,
     "noImplicitAny": true,

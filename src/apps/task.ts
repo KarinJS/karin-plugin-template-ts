@@ -1,28 +1,11 @@
-import { logger, Plugin } from 'node-karin'
+import { karin, logger } from 'node-karin'
 
-export class Task extends Plugin {
-  constructor () {
-    super({
-      /** 插件名称 */
-      name: 'template-task',
-      /** 插件描述 */
-      dsc: '定时任务模板',
-      task: [
-        {
-          /** 定时任务名称 */
-          name: '1分钟打印1次hello',
-          /** cron表达式 */
-          cron: '0 */1 * * * *',
-          /** 方法名 */
-          fnc: 'taskHello',
-          /** 是否显示操作日志 */
-          log: false,
-        },
-      ],
-    })
-  }
-
-  async taskHello () {
-    logger.info('hello')
-  }
-}
+/**
+ * 定时任务模板
+ * 参数1: 任务名称
+ * 参数2: cron表达式
+ * 参数3: 任务方法
+ */
+export const Task = karin.task('1分钟打印1次hello', '0 */1 * * * *', async () => {
+  logger.info('hello')
+})
