@@ -13,10 +13,7 @@
     "url": "git+https://github.com/KarinJS/karin-plugin-template-ts.git"
   },
   "scripts": {
-    "addpkg": "node pkg.js --type add",
-    "delpkg": "node pkg.js --type del",
-    "init": "npm run addpkg && npm install",
-    "build": "tsc --project tsconfig.json && tsc-alias -p tsconfig.json && npm run delpkg",
+    "build": "tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
     "pub": "npm publish --access public"
   },
   "devDependencies": {
