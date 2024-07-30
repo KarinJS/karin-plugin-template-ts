@@ -1,6 +1,8 @@
-import { logger, YamlEditor } from 'node-karin'
+import fs from 'fs'
+import Yaml from 'yaml'
+import chokidar from 'node-karin/chokidar'
 import { dirPath, basename } from '@/utils'
-import { fs, yaml as Yaml, chokidar } from 'node-karin/modules.js'
+import { logger, YamlEditor } from 'node-karin'
 
 class Cfg {
   /** 配置文件跟路径 */
