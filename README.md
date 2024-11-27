@@ -19,8 +19,8 @@ ts插件的开发较为繁琐，但请不要着急，容我娓娓道来~
 ![202404121414580](https://cdn.jsdelivr.net/gh/Zyy955/imgs/img/202404121414580.png)
 
 ```bash
-# 请改成你自己的仓库
-git clone https://github.com/karinjs/karin-plugin-template-ts.git ./plugins/karin-plugin-template-ts
+# 请改成你自己的仓库 注意！ 现在是克隆成单独的文件夹 而不是以前一样作为插件
+git clone https://github.com/karinjs/karin-plugin-template-ts.git
 ```
 
 ## 安装开发依赖
@@ -31,7 +31,9 @@ pnpm install
 
 ## 开始你的开发
 
-> 目前无法直接执行`ts`插件包，需要手动编译后跑`js`。
+```bash
+npx karin ts
+```
 
 ```bash
 # 编译

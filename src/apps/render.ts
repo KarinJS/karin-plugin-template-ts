@@ -13,6 +13,7 @@ export const image = karin.command(/^#?测试渲染$/, async (e) => {
 
     const img = await render.render({
       name: 'render',
+      encoding: 'base64',
       file: html,
       data: {
         file: image,
@@ -21,9 +22,9 @@ export const image = karin.command(/^#?测试渲染$/, async (e) => {
       pageGotoParams: {
         waitUntil: 'networkidle2',
       },
-    }) as string
+    })
 
-    await e.reply(segment.image(img))
+    await e.reply(segment.image(`base64://${img}`))
     return true
   } catch (error) {
     logger.error(error)
@@ -55,6 +56,7 @@ export const renderUrl = karin.command(/^#?渲染/, async (e) => {
   try {
     const img = await render.render({
       name: 'render',
+      encoding: 'base64',
       file: file || 'https://whitechi73.github.io/OpenShamrock/',
       type: 'png',
       pageGotoParams: {
@@ -66,7 +68,7 @@ export const renderUrl = karin.command(/^#?渲染/, async (e) => {
         deviceScaleFactor: 1,
       },
     }) as string
-    await e.reply(segment.image(img))
+    await e.reply(segment.image(`base64://${img}`))
     return true
   } catch (error: any) {
     logger.error(error)

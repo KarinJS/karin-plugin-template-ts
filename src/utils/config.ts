@@ -1,5 +1,5 @@
 import fs from 'fs'
-import Yaml from 'yaml'
+import Yaml from 'node-karin/yaml'
 import chokidar from 'node-karin/chokidar'
 import { dirPath, basename } from '@/utils'
 import { logger, YamlEditor } from 'node-karin'

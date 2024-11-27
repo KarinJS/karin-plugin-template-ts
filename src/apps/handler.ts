@@ -1,6 +1,6 @@
 import { karin, handler } from 'node-karin'
 
-export const test = karin.handler('test.image', async (args: any, reject: (msg?: string) => void) => {
+export const test = karin.handler('test.image', (args, reject) => {
   /** 取消注释告知karin继续使用下一个处理器 */
   // reject('继续循环下一个handler')
   return 'Handler处理完成'
