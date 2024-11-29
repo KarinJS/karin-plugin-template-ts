@@ -1,21 +1,21 @@
-import { karin, segment, Bot, common } from 'node-karin'
+import { karin, segment, common } from 'node-karin'
 
 /**
  * 发送主动消息插件demo
  * 触发指令: #测试主动消息
  */
 export const sendMsg = karin.command(/^#测试主动消息$/, async (e) => {
-  /** Bot的uid 哪个Bot发就填哪个的 */
-  const uid = e.bot.account.uid || e.bot.account.uin
+  /** Bot的id 哪个Bot发就填哪个的 */
+  const selfId = e.selfId
 
   /** 发送目标 */
   const contact = e.contact
 
   /** 发送内容 */
-  const message = segment.text('\n这是一条主动消息，10秒后自动撤回~')
+  const text = '\n这是一条主动消息，10秒后自动撤回~'
 
   /** 发送消息 */
-  const { messageId } = await Bot.sendMsg(uid, contact, message, { recallMsg: 10 })
+  const { messageId } = await karin.sendMsg(selfId, contact, text, { recallMsg: 10 })
 
   /** 打印返回的消息ID */
   console.log(`发送成功，消息ID：${messageId}`)
@@ -47,7 +47,7 @@ export const forwardMessage = karin.command(/^#测试转发$/, async (e) => {
   ]
 
   /** 构建转发消息体 */
-  const content = common.makeForward(message, e.self_id, e.bot.account.name)
+  const content = common.makeForward(message, e.selfId, e.bot.account.name)
 
   /** 发送转发消息 */
   await e.bot.sendForwardMsg(e.contact, content)

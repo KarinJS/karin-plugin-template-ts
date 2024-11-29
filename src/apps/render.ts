@@ -1,4 +1,4 @@
-import { dirPath } from '@/utils'
+import { dirPath, config } from '@/utils'
 import { karin, render, common, segment, logger } from 'node-karin'
 
 /**
@@ -87,4 +87,16 @@ export const renderUrl = karin.command(/^#?渲染/, async (e) => {
 
   /** 谁可以触发这个插件 'all' | 'master' | 'admin' | 'group.owner' | 'group.admin' */
   permission: 'master',
+})
+
+/**
+ * 网页截图
+ */
+export const screenshot = karin.command('^#测试截图$', async (e) => {
+  const { screenshotUrl } = config.config()
+  const img = await karin.render(screenshotUrl)
+  await e.reply(segment.image(`base64://${img}`))
+  return true
+}, {
+  name: '测试截图',
 })
