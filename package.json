@@ -16,6 +16,7 @@
     "build": "tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
     "pub": "npm publish --access public"
   },
+  "main": "lib/index.js",
   "devDependencies": {
     "@types/node": "^20.17.8",
     "eslint": "^9.7.0",
