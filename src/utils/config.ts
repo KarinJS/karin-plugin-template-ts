@@ -22,7 +22,11 @@ copyConfigSync(defConfig, dirConfig, ['.yaml'])
 /**
  * @description 配置文件
  */
-export const config = () => requireFileSync(`${dirConfig}/config.yaml`)
+export const config = () => {
+  const cfg = requireFileSync(`${dirConfig}/config.yaml`)
+  const def = requireFileSync(`${defConfig}/config.yaml`)
+  return { ...def, ...cfg }
+}
 
 /**
  * @description package.json
